@@ -6,8 +6,6 @@
 <title>FriendsFirst — Build the kind of relationship that lasts.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
-<!-- Tally forms -->
-<script async src="https://tally.so/widgets/embed.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HRCGEP7YT8"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -361,6 +359,32 @@ footer {
   .footer-links { flex-wrap: wrap; justify-content: center; }
   .quote-card { padding: 32px 28px; }
 }
+
+/* WAITLIST FORM */
+.waitlist-form {
+  display: flex; gap: 12px; max-width: 480px; margin: 0 auto;
+}
+.waitlist-form input[type="email"] {
+  flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+  color: var(--white); font-family: var(--sans); font-size: 15px; font-weight: 300;
+  padding: 14px 20px; border-radius: 100px; outline: none; transition: border-color 0.2s;
+}
+.waitlist-form input[type="email"]::placeholder { color: var(--gray); }
+.waitlist-form input[type="email"]:focus { border-color: var(--purple); }
+.waitlist-form button {
+  background: var(--purple); color: var(--white); border: none;
+  padding: 14px 28px; border-radius: 100px; font-family: var(--sans);
+  font-size: 15px; cursor: pointer; white-space: nowrap; transition: background 0.2s;
+}
+.waitlist-form button:hover { background: #8f74ff; }
+.form-success p {
+  font-family: var(--serif); font-style: italic;
+  font-size: 22px; color: var(--white); text-align: center;
+}
+@media (max-width: 768px) {
+  .waitlist-form { flex-direction: column; }
+  .waitlist-form button { width: 100%; }
+}
 </style>
 </head>
 <body>
@@ -538,11 +562,14 @@ footer {
 <section class="cta" id="waitlist">
   <h2 class="cta-h2 reveal">Stop being<br><em>likeable.</em><br>Start being known.</h2>
   <div class="tally-wrap">
-    <div data-tally-src="https://tally.so/embed/68k0pe?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-         data-tally-overlay="0"
-         data-tally-emoji-text="👋"
-         data-tally-emoji-animation="wave"
-         style="width:100%;"></div>
+    <form class="waitlist-form" id="waitlist-form" action="https://formspree.io/f/mdkdpreb" method="POST">
+      <input type="hidden" name="_replyto" value="mzaitceva@gmail.com">
+      <input type="email" name="email" placeholder="your@email.com" required>
+      <button type="submit">Join waitlist →</button>
+    </form>
+    <div class="form-success" id="form-success" style="display:none;">
+      <p>You're in. ✦ We'll be in touch.</p>
+    </div>
   </div>
   <p class="cta-fine reveal">No spam. First to know when we launch in your city.</p>
 </section>
@@ -560,6 +587,34 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Waitlist form AJAX submit
+const form = document.getElementById('waitlist-form');
+const success = document.getElementById('form-success');
+if (form) {
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    const btn = form.querySelector('button');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+      if (res.ok) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+        gtag('event', 'waitlist_submit', { 'event_category': 'conversion' });
+      } else {
+        btn.textContent = 'Try again';
+        btn.disabled = false;
+      }
+    } catch(err) {
+      btn.textContent = 'Try again';
+      btn.disabled = false;
+    }
+  });
+}
+
 </script>
 </body>
 </html>

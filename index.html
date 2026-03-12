@@ -615,6 +615,52 @@ if (form) {
   });
 }
 
+
+// Track pricing button clicks
+document.querySelectorAll('.btn-outline').forEach(btn => {
+  btn.addEventListener('click', function() {
+    gtag('event', 'pricing_click', {
+      'event_category': 'conversion',
+      'event_label': 'explorer_19'
+    });
+  });
+});
+
+document.querySelectorAll('.btn-fill').forEach(btn => {
+  btn.addEventListener('click', function() {
+    gtag('event', 'pricing_click', {
+      'event_category': 'conversion',
+      'event_label': 'allin_29'
+    });
+  });
+});
+
+// Track nav waitlist button
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    gtag('event', 'waitlist_click', {
+      'event_category': 'engagement',
+      'event_label': 'nav'
+    });
+  });
+});
+
+// Track hero waitlist button
+document.querySelectorAll('.btn-hero').forEach(btn => {
+  btn.addEventListener('click', function() {
+    gtag('event', 'waitlist_click', {
+      'event_category': 'engagement',
+      'event_label': 'hero'
+    });
+  });
+});
+
+// Track page visit (fires once per session)
+gtag('event', 'page_visit', {
+  'event_category': 'engagement',
+  'event_label': document.referrer ? document.referrer : 'direct'
+});
+
 </script>
 </body>
 </html>

@@ -6,6 +6,17 @@
 <title>FriendsFirst — Build the kind of relationship that lasts.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Tally forms -->
+<script async src="https://tally.so/widgets/embed.js"></script>
+<!-- Google Analytics: раскомментируй и замени G-XXXXXXXXXX когда создашь аккаунт
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -21,7 +32,10 @@
   --sans: 'Geist', system-ui, sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
 body {
   background: var(--bg);
   color: var(--white);
@@ -29,6 +43,9 @@ body {
   font-weight: 300;
   line-height: 1.6;
   overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: 100%;
 }
 
 /* NAV */
@@ -57,9 +74,10 @@ nav::before {
 
 /* HERO */
 .hero {
-  min-height: 100vh; min-height: 100svh;
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 0 56px 80px;
+  padding: 120px 56px 80px;
   position: relative; overflow: hidden;
 }
 .hero-glow {
@@ -72,17 +90,13 @@ nav::before {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.2); opacity: 0.6; }
 }
-
 .hero-tag {
   font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--purple); margin-bottom: 36px;
   display: flex; align-items: center; gap: 10px;
   opacity: 0; animation: up 0.7s 0.1s forwards;
 }
-.hero-tag::before {
-  content: ''; display: block; width: 20px; height: 1px; background: var(--purple);
-}
-
+.hero-tag::before { content: ''; display: block; width: 20px; height: 1px; background: var(--purple); }
 .hero-h1 {
   font-family: var(--serif);
   font-size: clamp(56px, 9.5vw, 136px);
@@ -91,7 +105,6 @@ nav::before {
   opacity: 0; animation: up 0.8s 0.25s forwards;
 }
 .hero-h1 em { font-style: italic; color: rgba(237,235,230,0.38); }
-
 .hero-bottom {
   display: flex; align-items: flex-end; justify-content: space-between; gap: 48px;
   opacity: 0; animation: up 0.8s 0.45s forwards;
@@ -105,6 +118,7 @@ nav::before {
   font-family: var(--sans); font-size: 15px;
   text-decoration: none; cursor: pointer;
   transition: transform 0.2s, background 0.2s; white-space: nowrap;
+  display: inline-block;
 }
 .btn-hero:hover { transform: translateY(-2px); background: #8f74ff; }
 .hero-fine { font-size: 11px; color: var(--gray); font-style: italic; }
@@ -123,13 +137,8 @@ nav::before {
 @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* TRUTH */
-.truth {
-  padding: 140px 56px;
-  border-bottom: 1px solid var(--border);
-}
-.truth-inner {
-  max-width: 900px;
-}
+.truth { padding: 140px 56px; border-bottom: 1px solid var(--border); }
+.truth-inner { max-width: 900px; }
 .truth-label {
   font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
   color: var(--gray-light); margin-bottom: 48px;
@@ -144,11 +153,8 @@ nav::before {
 .truth-body em { font-style: italic; color: var(--gray-light); }
 .truth-body strong { font-weight: 400; color: var(--purple); font-style: normal; }
 
-/* WHAT PEOPLE SAY — before solution */
-.voices {
-  padding: 0 56px 120px;
-  border-bottom: 1px solid var(--border);
-}
+/* VOICES */
+.voices { padding: 0 56px 120px; border-bottom: 1px solid var(--border); }
 .voices-label {
   font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
   color: var(--gray-light); margin-bottom: 48px;
@@ -159,9 +165,7 @@ nav::before {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
   background: var(--border); border: 1px solid var(--border);
 }
-.voice-card {
-  background: var(--bg); padding: 36px 32px;
-}
+.voice-card { background: var(--bg); padding: 36px 32px; }
 .voice-text {
   font-family: var(--serif); font-style: italic;
   font-size: 18px; line-height: 1.5; letter-spacing: -0.01em;
@@ -171,10 +175,7 @@ nav::before {
 .voice-source span { color: var(--purple); }
 
 /* METHOD */
-.method {
-  padding: 140px 56px;
-  border-bottom: 1px solid var(--border);
-}
+.method { padding: 140px 56px; border-bottom: 1px solid var(--border); }
 .method-header {
   display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 80px; align-items: end;
 }
@@ -186,7 +187,6 @@ nav::before {
 .method-h2 em { font-style: italic; color: var(--gray-light); }
 .method-intro { font-size: 16px; color: var(--gray-light); line-height: 1.7; }
 .method-intro strong { color: var(--white); font-weight: 400; }
-
 .method-steps { display: flex; flex-direction: column; }
 .method-step {
   display: grid; grid-template-columns: 64px 1fr 1fr;
@@ -206,8 +206,7 @@ nav::before {
 
 /* PROOF */
 .proof {
-  padding: 140px 56px;
-  border-bottom: 1px solid var(--border);
+  padding: 140px 56px; border-bottom: 1px solid var(--border);
   display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
 }
 .proof-label {
@@ -216,32 +215,24 @@ nav::before {
   display: flex; align-items: center; gap: 12px;
 }
 .proof-label::before { content: ''; width: 24px; height: 1px; background: var(--gray); display: block; }
-.proof-stats { display: flex; flex-direction: column; gap: 0; }
-.stat {
-  border-top: 1px solid var(--border); padding: 28px 0;
-}
+.proof-stats { display: flex; flex-direction: column; }
+.stat { border-top: 1px solid var(--border); padding: 28px 0; }
 .stat-n {
   font-family: var(--serif);
   font-size: clamp(52px, 6vw, 88px);
   line-height: 1; letter-spacing: -0.04em;
 }
 .stat-l { font-size: 13px; color: var(--gray-light); margin-top: 6px; }
-
 .quote-card {
-  border: 1px solid rgba(123,94,255,0.2);
-  border-radius: 20px; padding: 52px 44px;
+  border: 1px solid rgba(123,94,255,0.2); border-radius: 20px; padding: 52px 44px;
   background: var(--purple-soft); position: relative; overflow: hidden;
 }
 .quote-card::before {
-  content: '\201C';
-  font-family: var(--serif); font-size: 220px; line-height: 0.8;
+  content: '\201C'; font-family: var(--serif); font-size: 220px; line-height: 0.8;
   color: rgba(123,94,255,0.08);
   position: absolute; top: 20px; left: 16px; pointer-events: none;
 }
-.q-source {
-  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--purple); margin-bottom: 24px;
-}
+.q-source { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 24px; }
 .q-text {
   font-family: var(--serif); font-style: italic;
   font-size: clamp(22px, 2.5vw, 34px);
@@ -252,10 +243,7 @@ nav::before {
 .q-who strong { color: var(--white); font-weight: 400; }
 
 /* PRICING */
-.pricing {
-  padding: 140px 56px;
-  border-bottom: 1px solid var(--border);
-}
+.pricing { padding: 140px 56px; border-bottom: 1px solid var(--border); }
 .pricing-top { margin-bottom: 64px; }
 .pricing-top h2 {
   font-family: var(--serif);
@@ -276,10 +264,7 @@ nav::before {
   padding: 4px 12px; border-radius: 100px; margin-bottom: 20px;
 }
 .p-tier { font-size: 12px; color: var(--gray-light); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
-.p-price {
-  font-family: var(--serif);
-  font-size: 80px; line-height: 1; letter-spacing: -0.05em; margin-bottom: 4px;
-}
+.p-price { font-family: var(--serif); font-size: 80px; line-height: 1; letter-spacing: -0.05em; margin-bottom: 4px; }
 .p-price sup { font-size: 30px; font-family: var(--sans); font-weight: 300; vertical-align: super; }
 .p-per { font-size: 13px; color: var(--gray); margin-bottom: 44px; }
 .p-list { list-style: none; margin-bottom: 44px; }
@@ -321,14 +306,12 @@ nav::before {
   line-height: 0.93; letter-spacing: -0.03em; margin-bottom: 60px;
 }
 .cta-h2 em { font-style: italic; color: rgba(237,235,230,0.35); }
-.cta-form { display: flex; gap: 10px; max-width: 460px; margin: 0 auto 14px; }
-.cta-input {
-  flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-  border-radius: 100px; padding: 14px 24px; color: var(--white);
-  font-family: var(--sans); font-size: 15px; outline: none; transition: border-color 0.2s;
+
+/* Tally form styling */
+.tally-wrap {
+  max-width: 480px; margin: 0 auto 16px;
 }
-.cta-input::placeholder { color: var(--gray); }
-.cta-input:focus { border-color: rgba(123,94,255,0.5); }
+
 .cta-fine { font-size: 12px; color: var(--gray); font-style: italic; }
 
 /* FOOTER */
@@ -356,9 +339,12 @@ footer {
 @media (max-width: 768px) {
   nav { padding: 20px 24px; }
   .nav-link { display: none; }
-  .hero { padding: 0 24px 60px; }
+
+  /* FIX: больше отступа сверху на мобилке */
+  .hero { padding: 160px 24px 60px; }
   .hero-bottom { flex-direction: column; align-items: flex-start; }
   .hero-cta { align-items: flex-start; }
+
   .truth { padding: 80px 24px; }
   .voices { padding: 0 24px 80px; }
   .voices-grid { grid-template-columns: 1fr; }
@@ -372,8 +358,7 @@ footer {
   .pricing { padding: 80px 24px; }
   .pricing-grid { grid-template-columns: 1fr; max-width: 100%; }
   .cta { padding: 100px 24px; }
-  .cta-form { flex-direction: column; }
-  .cta-input, .btn-hero { border-radius: 14px; }
+  .btn-hero { border-radius: 14px; width: 100%; text-align: center; }
   footer { padding: 28px 24px; flex-direction: column; gap: 20px; text-align: center; }
   .footer-links { flex-wrap: wrap; justify-content: center; }
   .quote-card { padding: 32px 28px; }
@@ -477,12 +462,12 @@ footer {
     <div class="method-step reveal">
       <span class="m-num">02</span>
       <h3 class="m-title">Build through<br><em>shared</em><br>experience.</h3>
-      <p class="m-body">Conversation alone doesn't create intimacy — shared moments do. We guide you toward <strong>real experiences together</strong>: the kind that drop the performance and build actual trust. A hike, a class, something you both sucked at.</p>
+      <p class="m-body">Conversation alone doesn't create intimacy — shared moments do. We guide you toward <strong>real experiences together</strong>: the kind that drop the performance and build actual trust.</p>
     </div>
     <div class="method-step reveal">
       <span class="m-num">03</span>
       <h3 class="m-title">Open up<br><em>gradually.</em><br>On purpose.</h3>
-      <p class="m-body">The speed is what kills most things before they start. FriendsFirst gives you a <strong>guided path of reflection and vulnerability</strong> — so depth builds naturally, not accidentally. Your pocket coach, always in your pocket.</p>
+      <p class="m-body">The speed is what kills most things before they start. FriendsFirst gives you a <strong>guided path of reflection and vulnerability</strong> — so depth builds naturally, not accidentally.</p>
     </div>
   </div>
 </section>
@@ -551,12 +536,15 @@ footer {
   </div>
 </section>
 
-<!-- CTA -->
+<!-- CTA / WAITLIST -->
 <section class="cta" id="waitlist">
   <h2 class="cta-h2 reveal">Stop being<br><em>likeable.</em><br>Start being known.</h2>
-  <div class="cta-form reveal">
-    <input class="cta-input" type="email" placeholder="your@email.com">
-    <a href="#" class="btn-hero">Join waitlist</a>
+  <div class="tally-wrap reveal">
+    <div data-tally-src="https://tally.so/embed/68k0pe?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+         data-tally-overlay="0"
+         data-tally-emoji-text="👋"
+         data-tally-emoji-animation="wave"
+         style="width:100%;"></div>
   </div>
   <p class="cta-fine reveal">No spam. First to know when we launch in your city.</p>
 </section>
@@ -573,6 +561,7 @@ footer {
 </footer>
 
 <script>
+// Scroll reveal
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
 }, { threshold: 0.1 });

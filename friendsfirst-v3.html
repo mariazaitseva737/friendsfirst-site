@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FriendsFirst — Build the kind of relationship that lasts.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0a;
+  --purple: #7B5EFF;
+  --purple-soft: rgba(123,94,255,0.1);
+  --white: #EDEBE6;
+  --gray: #555;
+  --gray-light: #888;
+  --border: rgba(255,255,255,0.07);
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'Geist', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 56px;
+}
+nav::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+  pointer-events: none; z-index: -1;
+}
+.logo { font-family: var(--serif); font-size: 19px; color: var(--white); text-decoration: none; }
+.nav-right { display: flex; align-items: center; gap: 32px; }
+.nav-link { font-size: 13px; color: var(--gray-light); text-decoration: none; transition: color 0.2s; }
+.nav-link:hover { color: var(--white); }
+.nav-btn {
+  background: var(--white); color: var(--bg);
+  border: none; padding: 9px 22px; border-radius: 100px;
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  cursor: pointer; text-decoration: none; transition: opacity 0.2s;
+}
+.nav-btn:hover { opacity: 0.85; }
+
+/* HERO */
+.hero {
+  min-height: 100vh; min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 56px 80px;
+  position: relative; overflow: hidden;
+}
+.hero-glow {
+  position: absolute; width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(123,94,255,0.14) 0%, transparent 70%);
+  top: 10%; right: -150px; pointer-events: none;
+  animation: breathe 7s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); opacity: 0.6; }
+}
+
+.hero-tag {
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--purple); margin-bottom: 36px;
+  display: flex; align-items: center; gap: 10px;
+  opacity: 0; animation: up 0.7s 0.1s forwards;
+}
+.hero-tag::before {
+  content: ''; display: block; width: 20px; height: 1px; background: var(--purple);
+}
+
+.hero-h1 {
+  font-family: var(--serif);
+  font-size: clamp(56px, 9.5vw, 136px);
+  line-height: 0.93; letter-spacing: -0.025em;
+  margin-bottom: 52px;
+  opacity: 0; animation: up 0.8s 0.25s forwards;
+}
+.hero-h1 em { font-style: italic; color: rgba(237,235,230,0.38); }
+
+.hero-bottom {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 48px;
+  opacity: 0; animation: up 0.8s 0.45s forwards;
+}
+.hero-desc { font-size: 16px; color: var(--gray-light); max-width: 340px; line-height: 1.7; }
+.hero-desc strong { color: var(--white); font-weight: 400; }
+.hero-cta { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.btn-hero {
+  background: var(--purple); color: var(--white);
+  padding: 16px 40px; border-radius: 100px; border: none;
+  font-family: var(--sans); font-size: 15px;
+  text-decoration: none; cursor: pointer;
+  transition: transform 0.2s, background 0.2s; white-space: nowrap;
+}
+.btn-hero:hover { transform: translateY(-2px); background: #8f74ff; }
+.hero-fine { font-size: 11px; color: var(--gray); font-style: italic; }
+
+/* TICKER */
+.ticker {
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 15px 0; overflow: hidden; white-space: nowrap;
+}
+.ticker-track { display: inline-block; animation: tick 24s linear infinite; }
+.ticker-track span {
+  display: inline-block; font-family: var(--serif); font-style: italic;
+  font-size: 15px; color: var(--gray-light); padding: 0 32px;
+}
+.ticker-track span.dot { font-style: normal; color: var(--purple); font-size: 8px; padding: 0 8px; vertical-align: middle; }
+@keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* TRUTH */
+.truth {
+  padding: 140px 56px;
+  border-bottom: 1px solid var(--border);
+}
+.truth-inner {
+  max-width: 900px;
+}
+.truth-label {
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gray-light); margin-bottom: 48px;
+  display: flex; align-items: center; gap: 12px;
+}
+.truth-label::before { content: ''; width: 24px; height: 1px; background: var(--gray); display: block; }
+.truth-body {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.8vw, 56px);
+  line-height: 1.18; letter-spacing: -0.015em;
+}
+.truth-body em { font-style: italic; color: var(--gray-light); }
+.truth-body strong { font-weight: 400; color: var(--purple); font-style: normal; }
+
+/* WHAT PEOPLE SAY — before solution */
+.voices {
+  padding: 0 56px 120px;
+  border-bottom: 1px solid var(--border);
+}
+.voices-label {
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gray-light); margin-bottom: 48px;
+  display: flex; align-items: center; gap: 12px;
+}
+.voices-label::before { content: ''; width: 24px; height: 1px; background: var(--gray); display: block; }
+.voices-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: var(--border); border: 1px solid var(--border);
+}
+.voice-card {
+  background: var(--bg); padding: 36px 32px;
+}
+.voice-text {
+  font-family: var(--serif); font-style: italic;
+  font-size: 18px; line-height: 1.5; letter-spacing: -0.01em;
+  color: var(--white); margin-bottom: 20px;
+}
+.voice-source { font-size: 12px; color: var(--gray-light); }
+.voice-source span { color: var(--purple); }
+
+/* METHOD */
+.method {
+  padding: 140px 56px;
+  border-bottom: 1px solid var(--border);
+}
+.method-header {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 80px; align-items: end;
+}
+.method-h2 {
+  font-family: var(--serif);
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1; letter-spacing: -0.025em;
+}
+.method-h2 em { font-style: italic; color: var(--gray-light); }
+.method-intro { font-size: 16px; color: var(--gray-light); line-height: 1.7; }
+.method-intro strong { color: var(--white); font-weight: 400; }
+
+.method-steps { display: flex; flex-direction: column; }
+.method-step {
+  display: grid; grid-template-columns: 64px 1fr 1fr;
+  gap: 48px; align-items: start;
+  padding: 52px 0; border-top: 1px solid var(--border);
+}
+.method-step:last-child { border-bottom: 1px solid var(--border); }
+.m-num { font-size: 12px; color: var(--purple); letter-spacing: 0.1em; padding-top: 4px; }
+.m-title {
+  font-family: var(--serif);
+  font-size: clamp(24px, 3vw, 40px);
+  line-height: 1.05; letter-spacing: -0.02em;
+}
+.m-title em { font-style: italic; color: var(--gray-light); }
+.m-body { font-size: 14px; color: var(--gray-light); line-height: 1.75; }
+.m-body strong { color: var(--white); font-weight: 400; }
+
+/* PROOF */
+.proof {
+  padding: 140px 56px;
+  border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.proof-label {
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gray-light); margin-bottom: 56px;
+  display: flex; align-items: center; gap: 12px;
+}
+.proof-label::before { content: ''; width: 24px; height: 1px; background: var(--gray); display: block; }
+.proof-stats { display: flex; flex-direction: column; gap: 0; }
+.stat {
+  border-top: 1px solid var(--border); padding: 28px 0;
+}
+.stat-n {
+  font-family: var(--serif);
+  font-size: clamp(52px, 6vw, 88px);
+  line-height: 1; letter-spacing: -0.04em;
+}
+.stat-l { font-size: 13px; color: var(--gray-light); margin-top: 6px; }
+
+.quote-card {
+  border: 1px solid rgba(123,94,255,0.2);
+  border-radius: 20px; padding: 52px 44px;
+  background: var(--purple-soft); position: relative; overflow: hidden;
+}
+.quote-card::before {
+  content: '\201C';
+  font-family: var(--serif); font-size: 220px; line-height: 0.8;
+  color: rgba(123,94,255,0.08);
+  position: absolute; top: 20px; left: 16px; pointer-events: none;
+}
+.q-source {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--purple); margin-bottom: 24px;
+}
+.q-text {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(22px, 2.5vw, 34px);
+  line-height: 1.3; letter-spacing: -0.01em;
+  margin-bottom: 28px; position: relative;
+}
+.q-who { font-size: 13px; color: var(--gray-light); }
+.q-who strong { color: var(--white); font-weight: 400; }
+
+/* PRICING */
+.pricing {
+  padding: 140px 56px;
+  border-bottom: 1px solid var(--border);
+}
+.pricing-top { margin-bottom: 64px; }
+.pricing-top h2 {
+  font-family: var(--serif);
+  font-size: clamp(36px, 4vw, 60px);
+  letter-spacing: -0.025em; margin-bottom: 12px; line-height: 1;
+}
+.pricing-top p { font-size: 15px; color: var(--gray-light); }
+.pricing-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--border); border: 1px solid var(--border); max-width: 860px;
+}
+.p-card { background: var(--bg); padding: 52px 44px; }
+.p-card.hot { background: var(--purple-soft); }
+.p-badge {
+  display: inline-block; font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--purple);
+  border: 1px solid rgba(123,94,255,0.3);
+  padding: 4px 12px; border-radius: 100px; margin-bottom: 20px;
+}
+.p-tier { font-size: 12px; color: var(--gray-light); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+.p-price {
+  font-family: var(--serif);
+  font-size: 80px; line-height: 1; letter-spacing: -0.05em; margin-bottom: 4px;
+}
+.p-price sup { font-size: 30px; font-family: var(--sans); font-weight: 300; vertical-align: super; }
+.p-per { font-size: 13px; color: var(--gray); margin-bottom: 44px; }
+.p-list { list-style: none; margin-bottom: 44px; }
+.p-list li {
+  font-size: 14px; color: var(--gray-light);
+  padding: 13px 0; border-bottom: 1px solid var(--border);
+  display: flex; gap: 12px; align-items: flex-start; line-height: 1.4;
+}
+.p-list li::before { content: '→'; color: var(--purple); flex-shrink: 0; font-size: 12px; margin-top: 1px; }
+.p-list li strong { color: var(--white); font-weight: 400; }
+.btn-outline {
+  display: block; text-align: center; border: 1px solid var(--border);
+  color: var(--white); padding: 14px; border-radius: 100px;
+  font-size: 14px; text-decoration: none; transition: border-color 0.2s;
+}
+.btn-outline:hover { border-color: var(--purple); }
+.btn-fill {
+  display: block; text-align: center;
+  background: var(--purple); color: var(--white);
+  padding: 14px; border-radius: 100px;
+  font-size: 14px; text-decoration: none; transition: background 0.2s;
+}
+.btn-fill:hover { background: #8f74ff; }
+
+/* CTA */
+.cta {
+  padding: 180px 56px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 70% at 50% 100%, rgba(123,94,255,0.2) 0%, transparent 65%);
+  pointer-events: none;
+}
+.cta-h2 {
+  font-family: var(--serif);
+  font-size: clamp(52px, 9vw, 128px);
+  line-height: 0.93; letter-spacing: -0.03em; margin-bottom: 60px;
+}
+.cta-h2 em { font-style: italic; color: rgba(237,235,230,0.35); }
+.cta-form { display: flex; gap: 10px; max-width: 460px; margin: 0 auto 14px; }
+.cta-input {
+  flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  border-radius: 100px; padding: 14px 24px; color: var(--white);
+  font-family: var(--sans); font-size: 15px; outline: none; transition: border-color 0.2s;
+}
+.cta-input::placeholder { color: var(--gray); }
+.cta-input:focus { border-color: rgba(123,94,255,0.5); }
+.cta-fine { font-size: 12px; color: var(--gray); font-style: italic; }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border); padding: 36px 56px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-logo { font-family: var(--serif); font-size: 17px; }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a { font-size: 13px; color: var(--gray); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--white); }
+
+/* ANIMATIONS */
+@keyframes up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.on { opacity: 1; transform: none; }
+.d1 { transition-delay: 0.1s; }
+.d2 { transition-delay: 0.2s; }
+.d3 { transition-delay: 0.3s; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  .nav-link { display: none; }
+  .hero { padding: 0 24px 60px; }
+  .hero-bottom { flex-direction: column; align-items: flex-start; }
+  .hero-cta { align-items: flex-start; }
+  .truth { padding: 80px 24px; }
+  .voices { padding: 0 24px 80px; }
+  .voices-grid { grid-template-columns: 1fr; }
+  .method { padding: 80px 24px; }
+  .method-header { grid-template-columns: 1fr; gap: 32px; }
+  .method-step { grid-template-columns: 40px 1fr; gap: 20px; }
+  .m-body { display: none; }
+  .proof { padding: 80px 24px; grid-template-columns: 1fr; gap: 56px; }
+  .proof-stats { flex-direction: row; flex-wrap: wrap; }
+  .stat { flex: 1; min-width: 120px; }
+  .pricing { padding: 80px 24px; }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 100%; }
+  .cta { padding: 100px 24px; }
+  .cta-form { flex-direction: column; }
+  .cta-input, .btn-hero { border-radius: 14px; }
+  footer { padding: 28px 24px; flex-direction: column; gap: 20px; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+  .quote-card { padding: 32px 28px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#">FriendsFirst</a>
+  <div class="nav-right">
+    <a class="nav-link" href="#method">How it works</a>
+    <a class="nav-link" href="#pricing">Pricing</a>
+    <a class="nav-btn" href="#waitlist">Join waitlist</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <p class="hero-tag">A new kind of relationship app</p>
+  <h1 class="hero-h1">Build the kind<br>of relationship<br>that <em>actually lasts.</em></h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">
+      Most connections fail before they start — too fast, too performative, no foundation.<br><br>
+      FriendsFirst is your <strong>pocket relationship coach</strong> — guiding you from stranger to someone who actually knows you. No spark required.
+    </p>
+    <div class="hero-cta">
+      <a class="btn-hero" href="#waitlist">Join the waitlist</a>
+      <span class="hero-fine">Free to join. Launching soon.</span>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span>Friendship first</span><span class="dot">✦</span>
+    <span>Slow burn > instant fizzle</span><span class="dot">✦</span>
+    <span>Shared values, not spark</span><span class="dot">✦</span>
+    <span>Be known, not just liked</span><span class="dot">✦</span>
+    <span>Presence before profiles</span><span class="dot">✦</span>
+    <span>The best relationships start like this</span><span class="dot">✦</span>
+    <span>Friendship first</span><span class="dot">✦</span>
+    <span>Slow burn > instant fizzle</span><span class="dot">✦</span>
+    <span>Shared values, not spark</span><span class="dot">✦</span>
+    <span>Be known, not just liked</span><span class="dot">✦</span>
+    <span>Presence before profiles</span><span class="dot">✦</span>
+    <span>The best relationships start like this</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- TRUTH -->
+<section class="truth">
+  <div class="truth-inner">
+    <div class="truth-label reveal">The uncomfortable truth</div>
+    <p class="truth-body reveal d1">
+      You can be surrounded by people who genuinely like you<br>
+      and still feel <em>completely unseen.</em><br><br>
+      We've all gotten very good at being likeable<br>
+      and very bad at being <strong>known.</strong><br><br>
+      The problem isn't you — it's the format.
+    </p>
+  </div>
+</section>
+
+<!-- VOICES -->
+<section class="voices">
+  <div class="voices-label reveal">What people actually say</div>
+  <div class="voices-grid">
+    <div class="voice-card reveal">
+      <p class="voice-text">"yeah tbh this is kinda how the best relationships start imo."</p>
+      <p class="voice-source"><span>27 upvotes</span> · r/dating_advice · unprompted</p>
+    </div>
+    <div class="voice-card reveal d1">
+      <p class="voice-text">"the initial spark stuff is exhausting. that makes so much more sense."</p>
+      <p class="voice-source"><span>3 upvotes</span> · r/dating_advice</p>
+    </div>
+    <div class="voice-card reveal d2">
+      <p class="voice-text">"I always say I'm more into the friends to lovers pipeline..."</p>
+      <p class="voice-source"><span>real comment</span> · r/dating_advice</p>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section class="method" id="method">
+  <div class="method-header">
+    <h2 class="method-h2 reveal">The method<br>that <em>actually</em><br>works.</h2>
+    <p class="method-intro reveal d1">
+      We guide you through a proven path — the same one that turns strangers into people who genuinely know each other.<br><br>
+      <strong>Not therapy. Not dating. Your pocket relationship coach.</strong>
+    </p>
+  </div>
+  <div class="method-steps">
+    <div class="method-step reveal">
+      <span class="m-num">01</span>
+      <h3 class="m-title">Start with<br><em>curiosity,</em><br>not chemistry.</h3>
+      <p class="m-body">Before asking "are we compatible?" — get curious about who this person actually is. Their interests, what drives them, those loveable individual quirks. <strong>This is the step most people skip.</strong> We make sure you don't.</p>
+    </div>
+    <div class="method-step reveal">
+      <span class="m-num">02</span>
+      <h3 class="m-title">Build through<br><em>shared</em><br>experience.</h3>
+      <p class="m-body">Conversation alone doesn't create intimacy — shared moments do. We guide you toward <strong>real experiences together</strong>: the kind that drop the performance and build actual trust. A hike, a class, something you both sucked at.</p>
+    </div>
+    <div class="method-step reveal">
+      <span class="m-num">03</span>
+      <h3 class="m-title">Open up<br><em>gradually.</em><br>On purpose.</h3>
+      <p class="m-body">The speed is what kills most things before they start. FriendsFirst gives you a <strong>guided path of reflection and vulnerability</strong> — so depth builds naturally, not accidentally. Your pocket coach, always in your pocket.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="proof">
+  <div class="proof-left reveal">
+    <div class="proof-label">People already get it</div>
+    <div class="proof-stats">
+      <div class="stat">
+        <div class="stat-n">118</div>
+        <div class="stat-l">upvotes on an organic Reddit post — $0 spent</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">300+</div>
+        <div class="stat-l">people already on the waitlist</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">29</div>
+        <div class="stat-l">upvotes on a single comment about this idea</div>
+      </div>
+    </div>
+  </div>
+  <div class="proof-right reveal d1">
+    <div class="quote-card">
+      <div class="q-source">r/dating_advice · organic · unprompted</div>
+      <p class="q-text">"yeah tbh this is kinda how the best relationships start imo."</p>
+      <p class="q-who"><strong>Key-Cantaloupe-867</strong> · 27 upvotes · no paid promotion</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-top reveal">
+    <h2>Simple pricing.</h2>
+    <p>Lock in early access pricing — yours forever as a waitlist member.</p>
+  </div>
+  <div class="pricing-grid reveal">
+    <div class="p-card">
+      <div class="p-tier">Explorer</div>
+      <div class="p-price"><sup>$</sup>19</div>
+      <div class="p-per">per month</div>
+      <ul class="p-list">
+        <li>2 guided experiences per month</li>
+        <li>Basic compatibility matching</li>
+        <li><strong>Your Path</strong> — reflection & growth coaching</li>
+        <li>Community access</li>
+      </ul>
+      <a href="#waitlist" class="btn-outline">Join waitlist</a>
+    </div>
+    <div class="p-card hot">
+      <div class="p-badge">Most committed</div>
+      <div class="p-tier">All in</div>
+      <div class="p-price"><sup>$</sup>29</div>
+      <div class="p-per">per month</div>
+      <ul class="p-list">
+        <li>Unlimited guided experiences</li>
+        <li><strong>Deep matching</strong> by values & growth stage</li>
+        <li>Full coaching path — step by step</li>
+        <li>Direct buddy discovery</li>
+        <li><strong>Early access</strong> to every new city</li>
+      </ul>
+      <a href="#waitlist" class="btn-fill">I'm in.</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="waitlist">
+  <h2 class="cta-h2 reveal">Stop being<br><em>likeable.</em><br>Start being known.</h2>
+  <div class="cta-form reveal">
+    <input class="cta-input" type="email" placeholder="your@email.com">
+    <a href="#" class="btn-hero">Join waitlist</a>
+  </div>
+  <p class="cta-fine reveal">No spam. First to know when we launch in your city.</p>
+</section>
+
+<footer>
+  <div class="footer-logo">FriendsFirst</div>
+  <div class="footer-links">
+    <a href="#">How it works</a>
+    <a href="#">Pricing</a>
+    <a href="mailto:app@friendsfirst.app">Contact</a>
+    <a href="/policy">Privacy</a>
+    <a href="/terms">Terms</a>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
